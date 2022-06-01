@@ -1,0 +1,13 @@
+# This playbook sets up self-hosted Gitlab
+# run this playbook with --ask-become-pass option if running it as a user who doesn't
+# have passwordless sudo access
+
+- name: GitLab setup
+  hosts: gitlab_hosts
+  remote_user: ansible
+  become: yes
+  become_method: sudo
+
+  roles:
+    - geerlingguy.swap
+    - gitlab_host

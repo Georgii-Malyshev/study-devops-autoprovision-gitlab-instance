@@ -31,6 +31,8 @@ For these playbooks to work on your ansible control node you'll need:
   ansible-galaxy collections:
     - community.general
     - community.libvirt
+  ansible-galaxy roles:
+    - geerlingguy.swap (https://galaxy.ansible.com/geerlingguy/swap) - install with 'ansible-galaxy install geerlingguy.swap')
   packages:
     - cloud-image-utils
   (to be continued)

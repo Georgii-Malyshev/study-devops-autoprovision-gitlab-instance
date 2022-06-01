@@ -1,0 +1,91 @@
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: Install the necessary dependencies ignoring "install_recommends"
+  ansible.builtin.package:
+    name:
+      - curl
+      - openssh-server
+      - ca-certificates
+      - tzdata
+      - perl
+    state: latest
+    install_recommends: no
+
+- name: Set Postfix option type
+  ansible.builtin.debconf:
+    name=postfix
+    question="postfix/main_mailer_type"
+    value="'Local only'"
+    vtype="string"
+
+- name: Set Postfix option hostname
+  ansible.builtin.debconf:
+    name=postifx
+    question="postfix/mailname"
+    value="gitlab-study"
+    vtype="string"
+
+- name: Install postfix
+  ansible.builtin.package:
+    name: postfix
+    state: latest
+    install_recommends: no
+
+# TODO enable if installing from repo
+#- name: Download GitLab CE installation script
+#  ansible.builtin.get_url:
+#    url: 'https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh'
+#    dest: /tmp/script.deb.sh
+#    mode: '0770'
+
+# TODO enable if installing from repo
+#- name: Set up GitLab CE's repository using script
+#  ansible.builtin.command: bash /tmp/script.deb.sh
+
+# TODO Temporarily disable for development&testing to avoid downloading GitLab each time
+#- name: Update apt cache and install GitLab CE package
+#  ansible.builtin.apt:
+#    name: gitlab-ce
+#    state: latest
+#    update_cache: yes
+
+# TODO delete after initial development&testing and download&install from repo instead
+- name: Copy GitLab CE .deb package from localhost to VM
+  ansible.builtin.copy:
+    src: '/home/malyshevgv/Downloads/gitlab-ce_15.0.0-ce.0_amd64.deb'
+    dest: '/tmp/gitlab-ce_15.0.0-ce.0_amd64.deb'
+# TODO delete after initial development&testing and download from repo instead
+- name: Install GitLab from .deb package
+  ansible.builtin.command: dpkg -i '/tmp/gitlab-ce_15.0.0-ce.0_amd64.deb'
+
+#- name: Configure GitLab's external_url
+#  ansible.builtin.lineinfile:
+#    path: /etc/gitlab/gitlab.rb
+#    regexp: ^.*external_url
+#    line: external_url 'http://192.168.123.2'
+
+#- name: Configure GitLab's NGINX's port
+#  ansible.builtin.lineinfile:
+#    path: /etc/gitlab/gitlab.rb
+#    regexp: ^.*nginx\['listen_port'\]
+#    line: "nginx['listen_port'] = 80"
+
+#- name: Configure GitLab's NGINX - listen_https
+#  ansible.builtin.lineinfile:
+#    path: /etc/gitlab/gitlab.rb
+#    regexp: ^.*nginx\['listen_https'\]
+#    line: "nginx['listen_https'] = false"
+
+#- name: Configure GitLab's NGINX - redirect_http_to_https
+#  ansible.builtin.lineinfile:
+#    path: /etc/gitlab/gitlab.rb
+#    regexp: ^.*nginx\['redirect_http_to_https'\]
+#    line: "nginx['redirect_http_to_https'] = false"
+
+#- name: Configure GitLab's NGINX
+#  ansible.builtin.lineinfile:
+#    path: /etc/gitlab/gitlab.rb
+#    regexp: ^.*letsencrypt\['enable'\]
+#    line: "letsencrypt['enable'] = false"
