@@ -60,6 +60,14 @@
 - name: Install GitLab from .deb package
   ansible.builtin.command: dpkg -i '/tmp/gitlab-ce_15.0.0-ce.0_amd64.deb'
 
+- name: Template out GitLab configuration file
+  ansible.builtin.template:
+    src: gitlab.rb.j2
+    dest: /etc/gitlab/gitlab.rb
+    owner: root
+    group: root
+    mode: '0600'
+
 #- name: Configure GitLab's external_url
 #  ansible.builtin.lineinfile:
 #    path: /etc/gitlab/gitlab.rb
