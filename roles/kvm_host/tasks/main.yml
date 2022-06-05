@@ -187,10 +187,10 @@
         command: define
         xml: '{{ lookup("template", "vm-domain.xml.j2")}}'
 
-    - name: Make the VM start automatically
+    - name: Stop the VM from starting automatically
       community.libvirt.virt:
         name: '{{ vm_name }}'
-        autostart: yes
+        autostart: no
   when: vm_exists == False
 
 - name: Start the VM
