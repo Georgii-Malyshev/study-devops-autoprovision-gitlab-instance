@@ -1,0 +1,6 @@
+- name: GitLab reconfigure
+  ansible.builtin.command: gitlab-ctl reconfigure
+  notify: GitLab restart
+
+- name: GitLab restart
+  ansible.builtin.command: gitlab-ctl restart

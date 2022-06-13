@@ -139,6 +139,7 @@
     mode: '0660'
   register: copy_result
 
+# TODO make this task idempotent
 - name: Resize VM image
   ansible.builtin.command: |
     qemu-img resize '{{ libvirt_pool_dir }}/{{ vm_name }}.qcow2' {{ vm_image_size_GB }}G
@@ -192,6 +193,7 @@
         name: '{{ vm_name }}'
         autostart: no
   when: vm_exists == False
+  notify: Remove old key
 
 - name: Start the VM
   community.libvirt.virt:
