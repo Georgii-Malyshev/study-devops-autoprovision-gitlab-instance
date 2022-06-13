@@ -1,0 +1,7 @@
+# KVM VM files
+vm-files/
+
+# config files templated-out from Jijna2 templates by Ansible
+cloud-init/userdata.yml
+vm-domain.xml
+vm-volume.xml
