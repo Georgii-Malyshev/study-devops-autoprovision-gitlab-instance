@@ -57,3 +57,5 @@
     mode: '0600'
 
 # TODO do a 'gitlab-ctl reconfigure' and after that a 'gitlab-ctl restart'
+# consider if it should be done only if GitLab config has changed or on
+# some other conditional

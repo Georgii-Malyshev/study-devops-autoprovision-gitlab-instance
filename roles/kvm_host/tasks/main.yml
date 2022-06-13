@@ -146,7 +146,7 @@
 - name: Template out cloud-init's userdata config file
   ansible.builtin.template:
     src: userdata.j2
-    dest: cloud-init/userdata.yml
+    dest: cloud-init/userdata.yml  # TODO consider deleting this file after provisioning the VM
     owner: root
     group: root
     mode: '0770'
