@@ -11,3 +11,6 @@
   roles:
     - geerlingguy.swap
     - gitlab_host
+
+  post_tasks:
+    - local_action: ansible.builtin.debug msg="GitLab's initial root {{ initial_root_password.stdout }}"

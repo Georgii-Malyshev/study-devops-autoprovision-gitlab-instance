@@ -56,3 +56,7 @@
     group: root
     mode: '0600'
   notify: GitLab reconfigure
+
+- name: Register Gitlab's initial root password
+  ansible.builtin.shell: "cat /etc/gitlab/initial_root_password | grep 'Password: '"
+  register: initial_root_password
